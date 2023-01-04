@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timer</title>
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        //변수 초기화
+        let [timer, timerId] = [0,0];
+
+        //돔 선택하기
+        const h1 = document.querySelector('h1');
+        const chb = document.querySelector('input');
+        //체크박스 이벤트 걸어주기 
+        chb.addEventListener('change', (event)=>{
+            
+            //체크 되어 있을때
+            if(event.currentTarget.checked){
+                timerId = setInterval(() => {
+                    timer += 1;
+                    h1.textContent = `${timer}초`;
+                }, 1000);
+            }else{
+                //체크 해제
+                clearInterval(timerId);
+            }
+        })
+    })
+</script>
+
+<body>
+
+    <input type="checkbox">
+    <span>타이머 활성화</span>
+    <h1></h1>
+
+</body>
+
+</html>

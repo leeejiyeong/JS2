@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inner</title>
+</head>
+
+<body>
+    <div id="test">
+        테스트
+        <span style="display: none;">숨었다.</span>
+    </div>
+
+    <script>
+        let div = document.getElementById('test');
+        //innerHTML, innerText, TextContent
+        console.log(div.innerHTML);         //div안에 있는 텍스트를 포함한 html태그 까지 다 나온다.
+        console.log(div.innerText);         //화면을 봤을때 보여지는 부분의 텍스트만 가져온다
+        console.log(div.textContent);       //요소의 안에 있는 텍스트 전부를 가져온다 -> 테스트, 숨었다.
+
+        let h1 = document.createElement('h1');
+        let a = 100;
+        h1.innerHTML = `자바스크립트${a}`;
+
+        div.append(h1);
+
+        // 그냥 div.innerHTML = `<h1>자바스크립트</h1>`; 라고 쓰면 기존의 내용이 다 지워지고 덮어써지기 때문에 주의
+
+    </script>
+</body>
+
+</html>

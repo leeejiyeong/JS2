@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>function</title>
+</head>
+
+<body>
+    <script>
+        
+        //일반함수
+        function sum(x, y) {
+            return x + y;
+        }
+
+        //alert(sum(1,2));
+
+        let total = sum(3,4);    //js는 변수에도 함수를 담을수 있다.
+        console.log(total);
+
+        //================================================================================
+
+        //익명함수 : 이름이 없는함수. 이름없이 바로 선언과 동시에 변수에 넣어주는것
+        const func = function(){
+            console.log('함수 내부 코드입니다.')
+        }
+        //익명함수 실행하는법 - 변수명에 ()쓰면 함수내부의 내용 출력
+        func();
+
+        console.log(typeof func);   //typeof = 변수의 타입을 확인하는 방법 : 타입이 function으로 나온다.(js에서는 함수타입도 있어서 그런것)
+        console.log(func)           //소괄호를 빼고 출력하면 함수 전체가 출력이 된다.
+        console.log(alert)          //기본 내부코드는 안알려줌
+
+        //나머지 매개변수(...) : 매개변수가 몇개가 들어올지 모를때 사용함.
+        function sample(...items){
+            console.log(items);                 //분명 배열처럼 생겼는데
+            console.log(typeof items);          //타입이 object로 나온다(?)
+            //배열인지 확인하는 방법
+            console.log(Array.isArray(items))   //배열인지 확인할때는 이걸 쓰는게 좋다. 배열이면 true, 아니면 false
+        }
+
+        // sample(1);  
+        // sample(1,2);
+        // sample(1,2,3);
+
+        //나머지 매개변수를 활용한 최소값 구하기
+        //items의 첫번째 값을 넣고 비교
+        function min(...items){
+            let output = items[0];
+
+            //배열 또는 객체의 인덱스 번호로 돌림
+            //Array = {1,2,3,4,5,6,7} 일때
+            //for~in : 0~6 까지 값을 출력(=i와 같은 역할)
+            for(let index in items){
+                if(output > items[index]){
+                    output = items[index];
+                }
+            }
+            return output;
+
+            //for~of : 직접 값을 꺼내와서 출력
+            for(let item of items){
+                if(output > item){
+                    output = item;
+                }
+            }
+            return output;
+        }
+
+        console.log(`최소값 = ${min(523,245,345,43,2345,6,345)}`);
+
+        //매개변수의 자료형에 따라 다르게 작동하는 min함수
+        //first의 자료값이 어떤건가에 따라서 구하는 방식이 달라진다.
+        //숫자
+        function min2(first, ...items){
+            let output;
+            let item;
+
+            //매개변수의 자료형에 따라 조건 분기하기
+            //first가 배열이라면 first 내부에서 최소값 구하기
+            if(Array.isArray(first)){
+                output = first[0];
+                item = first;
+            
+            //first가 숫자라면 first기준으로 최소값 구하기
+            } else if(typeof(first) == 'number'){
+                output = first;
+                item = items;
+            }
+
+            for(let idx in item){
+                if(output > item[idx]){
+                    output = item[idx];
+                }
+            }
+            return output;
+        }
+        console.log(`최소값2 : ${min2([1,4,3,6,5,2],0)}`)           //first : [1,4,3,6,5,2], items:0
+        console.log(`최소값2_1 : ${min2(10,9,8,7,6,5,4,3,2,1)}`)    //first : 10
+
+        //매개변수 -> 전개 연산자(...)를 활용하는 방식 : 매개변수를 넣을때 전개연산자를 넣을지 말지 
+        let arr = [23,34,6,8,99,65];
+
+        function sample2(...items){
+            console.log(items);
+        }
+
+        console.log('전개연산자 안 쓰는 경우');         //한칸에 배열 전체가 다들어가 있기 때문에 길이가 1임
+        sample2(arr)    
+        console.log('전개연산자를 쓰는 경우');          //각각 들어가서 길이 6으로 나옴
+        sample2(...arr);
+
+        //기본함수 매개변수 : 변수를 사용하지 않으면 기본값(미리 설정해둔값)이 들어감
+        function info(name, salary = 9000, hours = 40){
+            console.log(`${name} 님의 급여정보`);
+            console.log(` - 시급 : ${salary}원`);
+            console.log(` - 근무시간 : ${hours}`);
+            console.log(` - 급여 :${salary * hours}`);
+        }
+
+        info('김또치')
+        info('고길동', 9500);
+        info('고희동',10000, 52);
+
+        //윤년 구하기
+        function isLeapYear(year = new Date().getFullYear){
+            console.log(`매개변수 year : ${year}`);
+            return(year % 4 == 0) && (year % 100 !== 0) || (year % 400 === 0);
+        }
+
+        console.log(`올해는 윤년일까? === ${isLeapYear()}`);
+
+
+    </script>
+</body> 
+
+</html>

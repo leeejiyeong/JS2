@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>arrowFunction</title>
+</head>
+<body>
+    <script>
+        //화살표 함수(에로우 함수) : callback함수를 단순한 형태로 표현하기 위함(콜백함수가 모양이 살짝 축소되서 보기 편해짐)
+
+        let minus = function(a,b){
+            console.log(`빼기 : ${a-b}`);
+        }
+        minus(5,2);
+
+        //위의 함수를 화살표 함수로 표현하면..
+        minus = (a,b) => console.log(`빼기 : ${a-b}`);
+        minus(5,2);
+
+        /* ============화살표 함수 종류 3가지=============
+        1) 매개변수가 없을때 : () =>{...}
+        2) 매개변수가 하나일때  : x => {...}
+        3) 매개변수가 여러개일때  : (x,y) => {...}
+        ❗ 반환값이 필요하다면 return문이 반드시 존재해야함.*/
+
+        //1) 매개변수가 없을때
+        let no = () => console.log('매개변수 없음');
+        no();
+
+            //조건문이 한줄일 경우 중괄호{}를 생략할수도 있으나 헷갈리니까 그냥 쓰도록 하자
+            /*
+            if(minus(5,2)>=3)
+            console.log('정답은 2');
+            */
+        if(minus(5,2)>=3){
+            console.log('정답은 2');        
+        }
+        
+        //2) 매개변수가 한개일때
+        //방법1(추천)
+        let one = (x) => {
+            return x*x;
+        }
+        //방법2(변수에 괄호 생략 - 비추)
+        let two = x => {
+            return x*x;
+        }
+        console.log(one(100));
+
+        //3) 매개변수가 여러개일때
+        let three = (x,y,z) => {
+            return x*y*z;
+        }
+        console.log(three(5,6,7));
+
+        let multiply = (a,b, ...args) => {      //args : arguments(값)
+            let result = a+b;
+            for(let i of args){
+                result *=i;
+            }
+            return result;
+        }
+        console.log(`multiply :  ${multiply(1,2,3,4,5,6,7,9,8,10)}`);
+
+        console.log("===================================");
+
+        let arry = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+
+        arry.forEach(el =>{
+            console.log(el);
+        })
+        /* 이거랑 같다.
+        arry.forEach(function(el, idx, ary){
+            console.log(el);
+        })
+        */
+
+        let ary = arry.map(el => {
+            return el*el;
+        })
+        console.log(`arry 배열: ${ary}`);
+
+        let ary2 = ary.filter(el => {
+            return el % 3 == 0;
+        })
+        console.log(`filter 배열 : ${ary2}`);
+
+        //매소드 체이닝(method chaining)
+        arry.filter(el => el % 2 == 0)
+        .map(el => el * el)
+        .forEach(el => console.log(el));
+
+    </script>
+
+    <script>
+        /* 타이머 함수
+        윈도우가 가지고 있는 함수. 콤마 뒤에 적은 1000은 몇초뒤에 시작되는지 알려준다.
+        1은 1밀리세컨즈(m/s) : 1/1000초
+        */
+        //설정한 시간뒤에 실행하시오
+        setTimeout(()=>{    
+            console.log('1초 후에 실행됩니다.')
+        },1000);
+
+        let count = 1;
+
+        //설정한 시간마다 실행하시오
+        let id = setInterval(()=>{
+            console.log(`1초마다 실행됩니다 ${count}번째`);
+            count++;
+        },1000);
+
+        //타이머 멈추는 기능 - setInterval을 변수에 담아주고 시작한다.
+        setTimeout(()=>{
+            console.log('타이머를 종료합니다.');
+            clearInterval(id);
+        },5000)
+
+
+    </script>
+</body>
+</html>

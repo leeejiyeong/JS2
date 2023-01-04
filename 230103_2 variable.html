@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>variable</title>
+</head>
+<body>
+    
+    <script>
+        
+        //let : 단순히 블럭단위 안에서 만들어지는 변수들
+        //var : 전역에서 쓰는 변수. 선언하자마자 window에 등록되기 때문에 어디서 선언했던간에 불러도 다 나온다. 너무 막쓰면 좀 그럼
+        //const : 상수
+        
+        //console.log(i); // 오류남
+        console.log(j); // 오류안남
+
+        let i = 0;
+        var j = 0;
+    
+        console.log(window);
+        console.log(window.j);
+
+        function temp(){
+            var no = 1;
+            let no2 = 2;
+        }
+
+        //console.log(no);   
+        //console.log(no2);
+        //var는 window에붙여주는거랬는데 왜 못쓸까? 
+        //중괄호 안에 있다는건 그 내용이 메모리에 등록이 된다는것.
+        //=> 중괄호 두개 안에 선언했으니까 no, no2는 메모리에 등록이 된다. 중괄호를 벗어나면 메모리에서 사라짐 -> 컴퓨터가 인식을 못함
+        //그래서 중괄호안에서 선언한것은 중괄호를 벗어나면 인식을 못하는것
+        
+        //함수 레벨, 블록 레벨
+        let pi = 3.14;
+
+        console.log(pi);
+
+        {
+            let pi = 3.14592;
+            console.log(pi);    //중괄호 안에서 쓰인건 이 안에서 쓰고 일회성으로 사라진다. let은 같은 변수 사용하려면 블록으로 묶어줘야 가능
+        }
+
+        var a = 0;
+        var a = 10; 
+        //var는 같은 이름의 변수를 쓰는게 가능하다. 그래서 왠만하면 let을 쓰는것을 추천한다. 괜히 var써서 같은 변수 잘못쓰면 난리남
+        //but. 한번 등록하고 계속 써야하는 변수라면 var를 사용하는게 좋다.
+
+        //백틱. ``
+        //string 문자열 합치기 : +를 사용해서 길게 연결되면 가독성이 떨어지기 때문에 백틱을 사용하게 됨
+        console.log('파이값은' + pi);
+
+        //백틱을 활용해서 문자열 만들기 : 변수 부분에 ${}를 사용하고 ``로 감싸준다. 따옴표를 단순 텍스트로 인식하기 때문에 맘대로 사용할수있다..!
+        console.log(`''''''''파이값은 ${pi}`);
+        console.log(`파이값은`, pi);
+
+        //백틱 태그 만들기
+        // document.createElement('div').append(
+        //     `<input type = "text" value = "테스트">`
+        //     `<a href="www.naver.com" onclick="">`       //innerHTML사용할때 유용하다.
+        // );
+           
+        
+
+
+    </script>
+</body>
+</html>

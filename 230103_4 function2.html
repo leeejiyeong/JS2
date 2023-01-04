@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>function2</title>
+</head>
+
+<body>
+    <script>
+        //callback함수 : 매개변수로 함수를 호출하는 방식
+        //2)
+        function callThreeTimes(callback) {         //callback은 즉, print
+            for (let i = 0; i < 3; i++) {
+                callback(i);                        // = print(i)
+            }
+        }
+
+        //3)
+        function print(i) {
+            console.log(`${i}번째 함수 호출`);
+        }
+
+        //1)
+        callThreeTimes(print);
+
+        /*이 구조랑 같은거임
+        function callThreeTimes(callback) {
+            for (let i = 0; i < 3; i++) {
+                function print(i) {
+                    console.log(`${i}번째 함수 호출`);
+                }
+            }
+        }
+        */
+
+        //callback함수 (익명함수) : 위에서 따로 정의한 print함수의 원래 모습을 callback매개변수 안에 넣어준것
+        //많이 쓰기 때문에 반드시 눈에 익히자
+        callThreeTimes(function(i){
+            console.log(`${i}번째 함수 호출`);
+        })
+    </script>
+
+    <script>
+        //콜백함수 사용하는 함수
+        //1.forEach(배열로 된 애들만 사용할 수 있는 함수임)
+        let numbers = [123,434,354,578,456];
+
+        //기본형태 : 배열.forEach(function(element, index, 배열){})
+        numbers.forEach(function(el, idx, ary){
+            //el(element 또는 value) : 배열 요소 한 개
+            //idx(index) : 배열 인덱스 한 개
+            //ary(Array) : 배열 통째로 가져옴. (=numbers) 보통 잘 안씀
+            console.log(`${idx}번째 요소 : ${el}`);
+            console.log(`${ary}`);
+        })
+    </script>
+
+    <script>
+        //2.map() : 콜백함수를 통해서 새로운 배열을 만드는 함수
+        let no = [11,33,24,45,29,55];
+
+        //각 자리수가 제곱인 데이터를 다시 생성
+        no = no.map(function(el, idx, ary){
+            return el*el
+        })
+
+        //요소 하나씩 출력해주는 구문
+        no.forEach(console.log);
+
+    </script>
+
+    <script>
+        //3.filter : 내가 원하는 조건에 맞는 애들만 골라서 새로운 배열을 만드는것.
+        //(리턴하는 값이 true인 데이터로 새로운 배열 형성)
+
+        no = [1,2,3,4,5,6,7,8,9,0];
+
+        //짝수인 데이터만 골라서 새로운 배열 만들기
+        let evenNumber = no.filter(function(el){
+            return el % 2 == 0;
+        })
+
+        console.log(`원래배열 : ${no}`)
+        console.log(`짝수만 추출 : ${evenNumber}`)
+    </script>
+
+    <script>
+    //한번더 이해를 위한 재설명
+    //callback함수 -> 매개변수에 들어가는 함수
+    function test(temp){
+        //console.log(temp)
+        temp();
+    }
+
+    // test(1)
+    // test('test')
+
+    function innerFunc(){
+        console.log('test 안으로 들어왔따!');
+    }
+
+    test(innerFunc);    //test함수를 실행할건데 그 변수안에 innerFunc함수가 들어있는것
+    
+    test(function(){
+        console.log('나는 익명함수, test안으로 들어왔따')
+    })
+    </script>
+</body>
+
+</html>

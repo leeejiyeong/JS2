@@ -1,0 +1,70 @@
+<!-- 이제부터 패치랑 프로미스를 활용해서 api 불러오는거 할거임 -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movie</title>
+</head>
+<!-- 부트스트랩을 사용하기 위한 bootstrap cdn 링크 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+<style>
+    /* 웹폰트 */
+    @font-face {
+        font-family: 'yg-jalnan';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    /* 폰트 설정해주기 */
+    * {
+        font-family: 'yg-jalnan';   /* 이름설정 */
+        font-size: xx-large;
+    }
+    .container {
+        margin-top : 5vh;
+    }
+    button {
+        margin-top : 4vh;
+        float : right;
+    }
+</style>
+
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>영화 검색 날짜</label>
+                    <input type="date" class="form-control" id="movie">
+                    <button class="btn btn-primary" onclick="searchMovie()">검색</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script >
+        function searchMovie(){
+            let movieDate = document.getElementById('movie').value;         
+            //2022-01-01의 형태로 나오는것을 url처럼 20220101로 나오게 바꿔줘야한다.
+            /* 정규표현식(/\-/g) : 어떤 문자를 패턴으로 나타낼때 쓰는건데 알면 좋고 뭐..
+            g == global -> 해당 문자열 전체 중에서
+            -가 특수문자이기 때문에 인식못해서 이스케이프기호를 써주고
+            => -를 ''으로 대체하라는 것 */
+            movieDate = movieDate.replace(/\-/g,'');        
+            console.log(movieDate);
+
+            fetch(`https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=${movieDate}`)
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(data => console.log(data));
+        }
+    </script>
+</body>
+
+</html>

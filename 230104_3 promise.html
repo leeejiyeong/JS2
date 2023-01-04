@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise</title>
+</head>
+
+<body>
+    <script>
+        /* 비동기, 동기
+        동기 : 어떤 데이터를 불러올때 불러오는 동안 갔다가 오는걸 기다렸다가 함
+               보낸 순서대로 받아와서 처리함
+        비동기 : 어떤 데이터를 불러올때 불러오는 동안 다른걸 하고있다가 데이터 넘어오면 그때 함
+                여러개의 데이터를 처리할때 부른순서 상관없이 오는거 순서대로 처리함
+        */
+
+        /* //동기
+        function sync(callback) {
+            callback();
+        }
+
+        sync(function () {
+            console.log("동기 처리");
+        });
+
+        //비동기
+        function async(print, timeout){
+            setInterval(print, timeout);
+        }
+        async(() => console.log("비동기"),3000); */
+
+        //Promise
+        let myPromise = new Promise((resolve, reject) => { //변수 -> resolve : 성공시, reject : 실패시
+            setTimeout(() => {
+                let result = "promiseSuccess"
+                resolve(result);
+            }, 3000);
+        })
+
+        myPromise.then((message) => { //성공시 실행
+                console.log(message);
+            })
+
+            .catch(failMessage => { //실패시 실행
+                console.log(failMessage)
+            })
+
+        //async - await : 아래에 쓴 내용을 동기로 쓸건지 비동기로 쓸건지 정할수 있음(?)
+        async function temp() {
+
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve('완료');
+                    console.log('1')
+                    console.log('2')
+                }, 5000);                          //딜레이를 5초 걸어놨기 때문에
+            })
+
+            //let result = promise;                //동기 -> promise를 기다리지 않고 바로 결과를 반환하기 때문에 알림창에 안뜸
+            let result = await promise;            //비동기 -> promise를 실행하고 나서 결과를 반환함 (완료 창 뜸) fetch에서의 .then과 같은 역할이라 보면됨
+            alert(result);
+        }
+
+        temp();
+
+
+    </script>
+</body>
+
+</html>

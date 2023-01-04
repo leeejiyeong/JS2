@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movieCompany</title>
+</head>
+<!-- 부트스트랩을 사용하기 위한 bootstrap cdn 링크 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+<style>
+    /* 웹폰트 */
+    @font-face {
+        font-family: 'yg-jalnan';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    /* 폰트 설정해주기 */
+    * {
+        font-family: 'yg-jalnan';
+        /* 이름설정 */
+        font-size: large;
+    }
+
+    .container {
+        margin-top: 5vh;
+    }
+
+    button {
+        margin: 2vh 0 4vh 0;
+        float: right;
+    }
+
+    a {
+        display: block;
+    }
+</style>
+
+<body>
+    <p>영화사 상세페이지</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="list">
+
+            </div>
+        </div>
+</body>
+<script>
+    let companyCd = location.href.split('?')[1];
+    console.log(companyCd)
+    let url =
+        `	http://kobis.or.kr/kobisopenapi/webservice/rest/company/searchCompanyInfo.json?key=f5eef3421c602c6cb7ea224104795888&companyCd=${companyCd}`;
+    fetch(url)
+        .then(res => res.json())
+        .then((data) => {
+            console.log(data)
+
+            let companyInfo = data.companyInfoResult.companyInfo
+
+            let board = document.getElementById('list')
+
+            /* 
+            //영화사이름(한글)
+            let pTag = document.createElement('p');
+            pTag.textContent = companyInfo.companyNm
+            board.append(pTag)
+
+            //영화사이름(영어)
+            let pTag2 = document.createElement('p');
+            pTag2.textContent = companyInfo.companyNmEn
+            board.append(pTag2)
+
+            //ceo이름
+            let pTag3 = document.createElement('p');
+            pTag3.textContent = companyInfo.ceoNm
+            board.append(pTag3)
+            */
+           
+            //innerHTML사용
+            document.querySelector('#list').innerHTML = 
+            `<label>🍗 회사명(한글)</label> <p># ${companyInfo.companyNm}</p>
+            <label>🍖 회사명(영어)</label> <p># ${companyInfo.companyNmEn}</p>
+            <label>🥩 CEO</label> <p># ${companyInfo.ceoNm}</p>
+            <label> 🥠배급 영화 </label>
+            `
+            
+            //배급하는 영화제목
+            for (let i in companyInfo.filmos) {
+                let aTag = document.createElement('a');
+                //console.log(companyInfo.filmos[i].movieNm)
+                aTag.innerText = companyInfo.filmos[i].movieNm
+                board.append(aTag)
+            }
+
+            //뒤로가기 버튼
+            btn = document.createElement('a')
+            btn.setAttribute('href', 'javascript:history.back()');
+            btn.innerText = "뒤로 가기"
+            board.append(btn)
+        })
+</script>
+
+</html>

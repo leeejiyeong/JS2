@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세페이지</title>
+</head>
+<!-- 부트스트랩을 사용하기 위한 bootstrap cdn 링크 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+<style>
+    /* 웹폰트 */
+    @font-face {
+        font-family: 'yg-jalnan';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    /* 폰트 설정해주기 */
+    * {
+        font-family: 'yg-jalnan';
+        /* 이름설정 */
+        font-size: large;
+    }
+
+    .container {
+        margin-top: 5vh;
+    }
+
+    button {
+        margin: 2vh 0 4vh 0;
+        float: right;
+    }
+
+    a {
+        display: block;
+    }
+</style>
+
+<body>
+    <p>영화 상세페이지</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="list">
+
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-dark" type="button" onclick="companyInfo()">
+                영화사 조회
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        console.log(location.href)
+        let movieCd = location.href.split('?')[1]; //url을 가져와서 물음표 기준으로 영화코드만 자르기
+        console.log(movieCd)
+        let companyCd = "";
+        console.log(companyCd)
+
+
+        window.onload = function () {
+            let url =
+                `http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=${movieCd}`;
+            fetch(url)
+                .then(res => res.json())
+                .then((data) => {
+                    console.log(data)
+
+                    let movieInfo = data.movieInfoResult.movieInfo;
+
+                    let board = document.getElementById('list');
+
+                    /* // 영화 제목(한글)
+                    let pTag = document.createElement('p');
+                    pTag.textContent = movieInfo.movieNm;
+                    board.append(pTag);
+
+                    // 영화 제목(영어)
+                    let pTag2 = document.createElement('p');
+                    pTag2.textContent = movieInfo.movieNmEn;
+                    board.append(pTag2);
+
+                    // 개봉 날짜
+                    let pTag3 = document.createElement('p');
+                    pTag3.textContent = movieInfo.openDt;
+                    board.append(pTag3);
+
+                    // 감독
+                    let pTag4 = document.createElement('p');
+                    pTag4.textContent = movieInfo.directors[0].peopleNm;
+                    board.append(pTag4); */
+
+                    document.querySelector('#list').innerHTML = `
+                    <label> 🍕 영화제목(한글) </label> <p> # ${movieInfo.movieNm} </p>
+                    <label> 🍔 영화제목(영어) </label> <p> # ${movieInfo.movieNmEn} </p>
+                    <label> 🍟 개봉날짜 </label> <p> # ${movieInfo.openDt} </p>
+                    <label> 🌭 감독 </label> <p> # ${movieInfo.directors[0].peopleNm} </p>
+                    <label> 🍿 출연배우 </label>
+                    `;
+
+                    // 배우 - 여러명이라 for문 사용
+                    for (let actor of movieInfo.actors) {
+                        console.log(actor.peopleNm)
+                        let aTag = document.createElement('a');
+                        aTag.innerText = actor.peopleNm;
+                        let urlInfo =
+                            `https://search.naver.com/search.naver?where=nexearch&sm=top_sug.pre&fbm=1&acr=1&acq=tlsehdduq&qdt=0&ie=utf8&query=${actor.peopleNm}`;
+                        aTag.setAttribute('href', urlInfo)
+                        board.append(aTag)
+                    }
+                    
+                    btn = document.createElement('a')
+                    btn.setAttribute('href', 'javascript:history.back()');
+                    btn.innerText = "뒤로 가기"
+                    board.append(btn)
+
+
+                })
+        }
+
+        function companyInfo() {
+            let url =
+                `http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=${movieCd}`;
+            fetch(url)
+                .then(res => res.json())
+                .then((data) => {
+                    let movieInfo = data.movieInfoResult.movieInfo;
+                    let companyCd = movieInfo.companys[0].companyCd;
+                    console.log(companyCd)
+                    location.href = `/230104_6 testMovie.html?${companyCd}`;
+                })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>closure</title>
+</head>
+<body>
+    <p>전역변수를 사용한 Counting</p>
+    <button id="inclease">+</button>
+    <p id="count">0</p>
+    <!-- <script>
+        //실행되는 시점을 기억하는 함수
+        function test(){
+            let temp = 0;
+            temp++;
+        }
+        test(); //1
+        test(); //2
+        
+        //원래는 중괄호{}를 벗어나면 정의한게 사라지는데 closure는 그 예외이다.
+
+        function outerFunc(){
+            var x = 10;
+            var innerFnc = function(){
+                console.log(x);
+            }
+            innerFnc();
+        }
+        outerFunc();
+
+    </script> -->
+    <script>
+        // clusere함수 : 실행되는 시점을 기억하는 함수
+        var incleaseBtn = document.getElementById('inclease');
+        var count = document.getElementById('count');
+
+        /* 이 상태에서는 선언한 변수가 함수안에 있기 때문에 1에서 카운팅이 안올라간다.(물론 변수가 function밖에 있음 잘됨) 
+           이걸 closure로 바꿔보자
+        function increase(){
+            let counter = 0;
+            return ++counter;
+        } */
+
+        /* let increase = (function(){             //제일 처음 로직이 돌아갈때는 increase -> function() -> return fuction()이지만
+            let counter = 0;
+
+            return function(){                  //두번째 부터는 increase -> 내부의 return function()으로 바로간다
+                return counter++;               
+            };
+
+        }());
+
+        incleaseBtn.onclick = function(){       //클릭시 익명함수실행-> increase()호출
+            count.innerHTML = increase();
+        } */
+
+        function Counter(temp){                     //temp
+            var counter = 0;
+
+            //클로저
+            return function(){
+                counter = temp(counter);
+                return counter;
+            };
+        };
+
+        function increase(n){
+            return ++n;
+        }
+
+        function decrease(n){
+            return --n;
+        }
+
+        const increaser = Counter(increase);
+        console.log(increaser());                   //return ++n;
+        console.log(increaser());                       
+
+        const decreaser = Counter(decrease);
+        console.log(decreaser());                   //return --n;
+        console.log(decreaser());
+
+    </script>
+</body>
+</html>

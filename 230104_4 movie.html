@@ -20,22 +20,26 @@
         font-weight: normal;
         font-style: normal;
     }
+
     /* 폰트 설정해주기 */
     * {
-        font-family: 'yg-jalnan';   /* 이름설정 */
+        font-family: 'yg-jalnan';
+        /* 이름설정 */
         font-size: xx-large;
     }
+
     .container {
-        margin-top : 5vh;
+        margin-top: 5vh;
     }
+
     button {
-        margin-top : 4vh;
-        float : right;
+        margin: 2vh 0 4vh 0;
+        float: right;
     }
 </style>
 
 <body>
-    
+
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -46,24 +50,79 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <th>순위</th>
+                        <th>영화 제목</th>
+                        <th>누적 관객수</th>
+                        <th>영화 코드</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <script >
-        function searchMovie(){
-            let movieDate = document.getElementById('movie').value;         
+    <script>
+        function searchMovie() {
+            let movieDate = document.getElementById('movie').value;
             //2022-01-01의 형태로 나오는것을 url처럼 20220101로 나오게 바꿔줘야한다.
             /* 정규표현식(/\-/g) : 어떤 문자를 패턴으로 나타낼때 쓰는건데 알면 좋고 뭐..
             g == global -> 해당 문자열 전체 중에서
             -가 특수문자이기 때문에 인식못해서 이스케이프기호를 써주고
             => -를 ''으로 대체하라는 것 */
-            movieDate = movieDate.replace(/\-/g,'');        
+            movieDate = movieDate.replace(/\-/g, '');
             console.log(movieDate);
 
-            fetch(`https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=${movieDate}`)
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(data => console.log(data));
-        }
+            fetch(
+                    `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=${movieDate}`)
+                .then(res => res.json())
+                .then(data => {
+                    let mvList = data.boxOfficeResult.dailyBoxOfficeList
+                    let tbd = document.querySelector('tbody');
+                    //검색버튼 누르면 테이블 덧붙이는게아니라 교체해줌
+                    //방법1) tbd.innerHTML = ""; (꼼수)
+                    //방법2)
+                    while (tbd.firstChild) {
+                        tbd.removeChild(tbd.firstChild);
+                    }
+
+                    for (let list of mvList) {
+                        //태그 만들어주기
+                        let tr = document.createElement('tr');
+                        let td1 = document.createElement('td');
+                        let td2 = document.createElement('td');
+                        let td3 = document.createElement('td');
+                        let td4 = document.createElement('td');
+                        console.log(list.movieNm)
+
+                        //api의 텍스트 태그에 넣어주기
+                        td1.textContent = list.rank;
+                        td2.textContent = list.movieNm;
+                        td3.textContent = list.audiAcc;
+                        td4.textContent = list.movieCd;
+
+                        //다 만들어진 태그 붙여주기
+                        tr.append(td1, td2, td3, td4); //append한꺼번에 하는방법
+                        tbd.append(tr);
+
+                        tr.setAttribute('onclick', 'detail()')
+                    }
+                })
+                .catch(data => console.log(data));
+
+            }
+            function detail() {
+                let url = event.target.parentNode.children[3].textContent
+                location.href = `/detailMovie.html?${url}`;
+                console.log(event.target.parentNode.children[3].textContent)
+            }
+
+            
     </script>
 </body>
 

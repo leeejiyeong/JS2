@@ -18,17 +18,37 @@
             .then() 
         */
 
-        /* 제이쿼리에서의 기본적인 ajax형태 */
+        /* 제이쿼리에서의 기본적인 ajax형태 
+        $.ajax({    
+            url: "",                //요청 url
+            type: "",               //데이터 전송방식 - get, post
+            dataType: "",           //받아온 데이터 형태 - html, json, text
+            data: "",               //서버로 데이터 전송할때 사용   ==>이부분까지가 기존ajax의 fetch()부분이다.
+            success: function(data){                        //기존ajax의 .then()부분 - 데이터 전송 성공시 실행되는 내용
+        
+            },
+            error: function (request, status, error){       //기존ajax의 .catch()부분
+
+            }
+        });
+        */
         $.ajax({
-            url : 'noticeAjaxInsert.do',    //fetch부분(?)
-            type : 'post',                  //method -> get, post
-            data : $('#frm').serialize(),   // input name부분
+            url: 'noticeAjaxInsert.do', 
+            type: 'post',                       //method -> get, post
+            data: $('#frm').serialize(),        // input name부분
             // $('form').serialize => String
             // $('form').serializeArray() => Array, [{name1 : value1},{name2 : value2},...]
 
+            /* serialize를 사용하는 이유
+            형태:  $("form id 또는 name").serialize();
+            JQuery Ajax로 호출하기 전에 serialize를 해주면 form안에 값들을 한 번에 전송 가능한 data로 만들 수 있어 
+            많은 data를 보낼 때 유용하다.(일일이 다 나열하지 않게 해줌)
+            블로그 - https://lookingfor.tistory.com/entry/JQuery-serialize 예시 참조
+            */
+
             //객체(JSON형태) -> 문자열(String) 변경
             /* 
-            JSON.stringify({                //body. 데이터 전송하는 부분 
+            JSON.stringify({                    //body. 데이터 전송하는 부분 
                 nNo: $('.btn1').val(),
                 subject: "",
                 title: "",
@@ -36,18 +56,16 @@
             }),     
             */
 
-            dataType: 'json',               //header -> content-type인데 여기선 html, json, text그냥 이렇게 적으면 된다.
-            contentType : 'application/json; charset=utf-8',    //보낼때  application/x-www-form-urlencoded
+            dataType: 'json',           //header -> content-type인데 여기선 html, json, text그냥 이렇게 적으면 된다.
+            contentType: 'application/json; charset=utf-8', //보낼때  application/x-www-form-urlencoded
 
-            success : function(data){       //.then() 부분
-                JSON.parse(data);           //json이라 파싱이 필요할때(String -> JSON 변환).이거 안하면 단순 문자열이기 때문에 movie.movieCd이런거 못씀
+            success: function (data) {  //.then() 부분
+                JSON.parse(data);       //json이라 파싱이 필요할때(String -> JSON 변환).이거 안하면 단순 문자열이기 때문에 movie.movieCd이런거 못씀
             },
-            error : function(error){        //.catch부분
+            error: function (error) {   //.catch부분
                 console.log(error)
             }
         })
-
-
     </script>
 </body>
 

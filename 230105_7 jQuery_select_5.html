@@ -13,11 +13,11 @@
 <body>
     <script>
         $(function(){
-            //inner_1에서 p태그 중에 '내용 1'을 가진거
+            //contains : inner_1에서 p태그 중에 '내용 1'을 가진거
             $('#inner_1 p:contains(내용 1)').css('color', 'red')
-            //inner_1에서 p태그 중에서 strong태그를 가진거
+            //has : inner_1에서 p태그 중에서 strong태그를 가진거
             $('#inner_1 p:has(strong)').css('background-color', '#0ff')
-            //outer_warp의 모든 컨텐츠 가져오기(자식태그) -> h1, section, section
+            //contents : outer_warp의 모든 컨텐츠 가져오기(자식태그) -> h1, section, section
             $('#outer_wrap').contents().css('border', '1px dashed green')
 
             //inner_2의 p태그를 가져오는데 첫번째꺼 빼고 가져오기

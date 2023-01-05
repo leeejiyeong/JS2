@@ -69,9 +69,13 @@
 
     <script>
         function searchMovie() {
+            //id가 movie인 input의 value값 -> 날짜
             let movieDate = $('#movie').val();
+
+            //2023-01-01형태에서 하이픈(-)제거
             movieDate = movieDate.replace(/\-/g, '');
 
+            //Ajax호출
             $.ajax({
                 url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=${movieDate}`,
                 type: 'get',
@@ -79,23 +83,29 @@
                 success: function (data) {
                     console.log(data)
                     let mvList = data.boxOfficeResult.dailyBoxOfficeList;
+
                     $('tbody').empty() //querySelector로 가져와서 지우는게 한줄에 완료
 
+                    //반복문을 사용해서 태그 만들기
                     for (let list of mvList) {
-                        let tr = $('<tr>')
+                        let tr = $('<tr>')      //let tr = document.createElement('tr');
                         let td1 = $('<td>')
                         let td2 = $('<td>')
                         let td3 = $('<td>')
                         let td4 = $('<td>')
-
+                        
+                        //tr에 클릭이벤트 설정 - js처럼 함수 따로 안만들어도 간단하게 가능
                         tr.click(function(){
                             location.href = `/230105_13 jq_detailMovie.html?${list.movieCd}`;
                         })
-                        td1.text(list.rank)
+
+                        //text가져와서 넣기
+                        td1.text(list.rank)     //td1.textContent = list.rank;
                         td2.text(list.movieNm)
                         td3.text(list.audiAcc)
                         td4.text(list.movieCd)
 
+                        //만든거 붙이기
                         tr.append(td1, td2, td3, td4)
                         $('tbody').append(tr);
                     }

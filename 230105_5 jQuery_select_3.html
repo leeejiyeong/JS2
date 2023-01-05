@@ -33,21 +33,32 @@
 
             //반복문
             // [{},{},{}]
-            var obj = [{
-                'area': '스울'
-            }, {
-                'area': '붓싼'
-            }, {
-                'area': '대구'
-            }]
+            var obj = [
+                {'area': '스울', 'name' : '김또치'}, 
+                {'area': '붓싼', 'name' : '박또치'},
+                {'area': '대구', 'name' : '최또치'}
+            ]
 
-            $(obj).each(function(e,i){          //forEach로 돌려서 꺼내는것
-                console.log(e + ":" + i)
+            //each를 이용한 반복문
+            $.each(obj, function(idx, el){          //forEach로 돌려서 꺼내는것
+                console.log(idx, el)
+                console.log(`${el.area}에 거주하는 '${el.name}'씨`);
             })
 
-            for(let aa of obj){
-                console.log(aa)
+            //일반 for문(for~of)
+            for(let el of obj){
+                console.log(el.area)
             }
+
+            //forEach
+            obj.forEach(function(el, idx){
+                console.log(el.area)
+            })
+
+            //요소로 for문 돌리기
+            $('#menu li').each(function(idx, item){
+                console.log(item.textContent);
+            })
 
         })
     </script>

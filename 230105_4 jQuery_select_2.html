@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +9,15 @@
     <script src="https://code.jquery.com/jquery-3.6.3.js"
         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <script>
-        $(function(){
-            $('#list_1').parent().css('border','2px dotted red')     //선택한 요소(리스트1-1)의 부모요소에 css적용
-            $('#warp li').css('color','blue')                        //wrap의 li 전부에 적용
-            $('#warp > li > ul > #list_1').css('color', 'red')            //document.querySelectorAll()
-            $('#warp > li > ul').children().css('color','yellow')
+        $(function () {
+            /* 부모, 자식 요소 가져오기 */
+            $('#list_1').parent().css('border', '2px dotted red') //선택한 요소(리스트1-1)의 부모요소에 css적용
+            $('#warp li').css('color', 'blue') //wrap의 li 전부에 적용
+            $('#warp > li > ul > #list_1').css('color', 'red') //document.querySelectorAll()
+            //$('#warp > li > ul').children().css('color', 'yellow')
 
         })
     </script>
@@ -22,10 +25,10 @@
     <h1>인접 관계 선택자</h1>
     <ul id="warp">
         <li>리스트
-        <ul>
-            <li id="list_1">리스트 1-1</li>
-            <li>리스트 1-2</li>
-        </ul>
+            <ul>
+                <li id="list_1">리스트 1-1</li>
+                <li>리스트 1-2</li>
+            </ul>
         </li>
         <li>
             리스트2
@@ -36,4 +39,5 @@
     </ul>
 
 </body>
+
 </html>

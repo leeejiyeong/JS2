@@ -52,15 +52,19 @@
             </div>
         </div>
         <div class="row" id="nextInfo">
-            <button class="btn btn-warning" type="button" onclick="companyInfo()">
+            <button class="btn btn-warning" type="button">
                 영화사 조회
             </button>
         </div>
     </div>
 
     <script>
+        //현재페이지url을 가져와서 ?기준으로 자르기(영화코드)
         let movieCd = location.href.split('?')[1];
-        $(function () {
+
+        $(function () {         //=window.onload
+
+            //Ajax호출
             $.ajax({
                 url: `http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=${movieCd}`,
                 dataType: 'json',
@@ -68,21 +72,31 @@
                 success: function (data) {
                     let movieInfo = data.movieInfoResult.movieInfo;
 
+                    //#list div에 붙인다. 태그를 만들어서
                     $('#list').append(
-                        $('<p>').text(movieInfo.movieNm),
-                        $('<p>').text(movieInfo.movieNmEn),
-                        $('<p>').text(movieInfo.openDt),
-                        $('<p>').text(movieInfo.directors[0].peopleNm)
+                        $('<label>').text('🍕 영화제목(한글)'),
+                        $('<p>').text('# '+movieInfo.movieNm),
+                        $('<label>').text('🍕 영화제목(영어)'),
+                        $('<p>').text('# '+movieInfo.movieNmEn),
+                        $('<label>').text('🍕 개봉날짜'),
+                        $('<p>').text('# '+movieInfo.openDt),
+                        $('<label>').text('🍕 감독'),
+                        $('<p>').text('# '+movieInfo.directors[0].peopleNm),
+                        $('<label>').text('🍕 배우'),
                     )
 
                     for (let actor of movieInfo.actors) {
                         let urlInfo =
                             `https://search.naver.com/search.naver?where=nexearch&sm=top_sug.pre&fbm=1&acr=1&acq=tlsehdduq&qdt=0&ie=utf8&query=${actor.peopleNm}`;
+                        
+                        //#list에 붙인다. a태그를 만들어서. text넣고. 링크 넣고
                         $('#list').append(
                             $('<a>').text(actor.peopleNm)
                                 .attr('href', urlInfo)
                         )
                     }
+
+                    //#list에 붙인다. a태그를 만들어서. 링크넣고. text넣고
                     $('#list').append(
                         $('<a>').attr('href', 'javascript:history.back()')
                         .text('뒤로가기')
@@ -93,6 +107,18 @@
 
                 }
 
+            })
+        })
+        $('button').click('href',function(){
+            $.ajax({
+                url : `http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=${movieCd}`,
+                dataType : 'json',
+                method : 'get',
+                success : function(data){
+                    let movieInfo = data.movieInfoResult.movieInfo;
+                    let companyCd = movieInfo.companys[0].companyCd;
+                    location.href = `/230105_14 movieCompany.html?${companyCd}`;
+                }
             })
         })
     </script>

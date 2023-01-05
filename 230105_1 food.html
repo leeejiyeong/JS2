@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>food</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<style>
+    @font-face {
+        font-family: 'YanoljaYacheR';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/YanoljaYacheR.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        font-family: 'YanoljaYacheR';
+    }
+
+    .card:hover {
+        cursor: pointer;
+        color: red;
+    }
+
+    .card-text {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+<body>
+    <input type="text" id="location">
+    <button type="button" id="btn" class="btn btn-primary" onclick="findFood()">검색</button>
+
+    <script>
+        function findFood(){
+            let loc = document.getElementById('location').value;
+            console.log(loc)
+            let url = `https://www.daegufood.go.kr/kor/api/tasty.html?mode=json&addr=${loc}`;
+            fetch(url)
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data)
+            })
+
+        }
+
+    </script>
+
+</body>
+</html>

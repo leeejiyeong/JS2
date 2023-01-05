@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery_select_1</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>제이쿼리</h1>
+    <h1 id="tit">선택자</h1>
+    <h1 class="tit">선택자2</h1>
+    <h3>인접 선택자</h3>
+
+    <script>
+        $(document).ready(function () {                 //== $(function(){  페이지 전부 로딩한뒤 실행하게 하는거
+            /*  
+            $('#tit').css('background-color', 'red')    //제이쿼리의 장점 : 메소드 체이닝이 가능해서 여러종류 사용가능
+                .css('border', '2px solid yellow')
+
+            $('.tit').css({                             //중괄호 안에 사용할것 나열해주면 여러개 한줄에 쓰기 가능
+                'background-color': 'yellow',
+                'border': '2px solid blue'
+            })  
+            */
+
+            //h1 전부에 css적용하기
+            $('h1').css('background-color','grey')      //querySelectorAll('h1')
+
+            //h1.tit이랑 h3 동시에 적용하기
+            $('#tit, h3').css('background-color','skyblue')
+
+            //h1중에서 원하는것만 적용하기(h1중에 클래스가 tit인것만)
+            $('h1.tit').css('background-color', 'pink')
+
+            /* 인접한것 가져오기 */
+            //내 뒤에있는 형제요소 가져오기
+            $('#tit').next().css('color','blue')    //document.getElementById('tit').nextSibling  
+            //내 앞에있는 형제요소 가져오기
+            $('#tit').prev().css('color','blue')    //document.getElementById('tit').previousSibling 
+
+            /* 부모, 자식 요소 가져오기 */
+
+        })
+    </script>
+</body>
+
+</html>

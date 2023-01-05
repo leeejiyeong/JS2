@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery</title>
+    <!-- url로 넣는법 -->
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <!--파일로 넣는법 
+        <script src="jquery-3.6.3.min.js"></script> -->
+</head>
+
+<body>
+    <script>
+        $(function(){                            //window.onload, document.addEventListener('DOMC~')랑 같은것
+            $('#title').css('color','red');      //document.getElementById('title').style.color = 'red';
+            
+           /* 직접 돔을 선택해서 가져오는방법
+            $('.클래스명')                        //document.getElementByClassName
+            $('*')                               //모든 돔 객체에 접근
+            $('h1')                              //모든 h1 dom 읽기
+            $('<div>')                           //document.createElement('div')
+            */
+
+        })
+    </script>
+    <h1 id="title">제목</h1>
+    <h1 id="title">제목</h1>
+    <h1 id="title">제목</h1>
+    <h1 id="title">제목</h1>
+</body>
+
+</html>

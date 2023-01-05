@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+
+<body>
+    <script>
+        /* 이제까지 써왔던것
+        fetch()
+            .then()
+            .then() 
+        */
+
+        /* 제이쿼리에서의 기본적인 ajax형태 */
+        $.ajax({
+            url : 'noticeAjaxInsert.do',    //fetch부분(?)
+            type : 'post',                  //method -> get, post
+            data : $('#frm').serialize(),   // input name부분
+            // $('form').serialize => String
+            // $('form').serializeArray() => Array, [{name1 : value1},{name2 : value2},...]
+
+            //객체(JSON형태) -> 문자열(String) 변경
+            /* 
+            JSON.stringify({                //body. 데이터 전송하는 부분 
+                nNo: $('.btn1').val(),
+                subject: "",
+                title: "",
+                writer:""
+            }),     
+            */
+
+            dataType: 'json',               //header -> content-type인데 여기선 html, json, text그냥 이렇게 적으면 된다.
+            contentType : 'application/json; charset=utf-8',    //보낼때  application/x-www-form-urlencoded
+
+            success : function(data){       //.then() 부분
+                JSON.parse(data);           //json이라 파싱이 필요할때(String -> JSON 변환).이거 안하면 단순 문자열이기 때문에 movie.movieCd이런거 못씀
+            },
+            error : function(error){        //.catch부분
+                console.log(error)
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

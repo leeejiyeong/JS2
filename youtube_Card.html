@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<style>
+    @font-face {
+        font-family: 'YanoljaYacheR';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/YanoljaYacheR.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        font-family: 'YanoljaYacheR';
+    }
+
+    .card:hover {
+        cursor: pointer;
+        color: red;
+    }
+
+    .card-text {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row" style="margin: 10vh;">
+            <div class="col">
+               
+            </div>
+            <div class="col-6">
+              <h1 style="color: cornflowerblue;">༼ つ ◕_◕ ༽つ 또치튜브</h1>
+            </div>
+            <div class="col">
+             
+            </div>
+        </div>
+        <div class="row" id="list">
+
+        </div>
+    </div>
+</body>
+
+<script>
+    fetch(
+        'https://www.googleapis.com/youtube/v3/search?key=AIzaSyA2MQJB8EuzKBJsfO1AZHZ3I4BJcZtF3tM&part=snippet&type=video&maxResults=20&videoEmbeddable=true'
+        )
+        .then(res => res.json())
+        .then(data => {
+            let lists = data.items;
+            let divs = document.getElementById('list');
+            for (let list of lists) {
+                console.log(list)
+                let makeDiv = document.createElement('div');
+                makeDiv.setAttribute('class', 'card')
+                makeDiv.style.width = '20%'
+
+                makeDiv.addEventListener('click', function () {
+                    location.href = `https://www.youtube.com/watch?v=${list.id.videoId}`
+                })
+
+                let imgs = document.createElement('img');
+                imgs.setAttribute('class', 'card-img-top');
+                imgs.style.width = '100%';
+                imgs.setAttribute('src', `${list.snippet.thumbnails.high.url}`);
+
+                let textDiv = document.createElement('div');
+                textDiv.setAttribute('class', 'card-body');
+
+                let title = document.createElement('h4');
+                title.textContent = `- ${list.snippet.title}`;
+
+                let desc = document.createElement('p');
+                desc.setAttribute('class', 'card-text');
+                desc.textContent = `${list.snippet.description}`;
+
+                textDiv.append(title, desc);
+                makeDiv.append(imgs, textDiv);
+
+                divs.append(makeDiv);
+            }
+
+        })
+</script>
+
+</html>

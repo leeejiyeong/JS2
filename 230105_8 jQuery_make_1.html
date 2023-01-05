@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery_make_1</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <style>
+        .green {
+            background-color: green;
+        }
+
+        .bv {
+            background-color: blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="attach">
+
+    </div>
+    <input type="text" value="jquery" id="test">
+    <script>
+        //태그 만들기 - #attach에 label을 만들어서 붙인다
+        $('#attach').append(
+            $('<label>')
+            .text('내가 처음만든 태그') //textContent
+            .attr({ //setAttribute()
+                'id': 'firstLabel', //여러개도 가능함
+                'class': 'firstClass'
+            })
+        )
+        //test의 value값 가져옴
+        console.log($('#test').val());
+        $('#test').val('자바스크립트') //()채우면 내용 들어감
+
+        //attr을 안쓰고 class 추가하는 방법 - addClass함수 (class만 됨)
+        $('#test').addClass('inputClass')
+
+        //class삭제
+        $('#test').removeClass('inputClass')
+        //Attr로 만든거 삭제하기
+        $('#test').removeAttr('')
+
+        //attach를 가져와서 html요소를 추가해주기(?)
+        console.log($('#attach').html(
+            '<a href= \"#\">클릭</a>'
+        ))
+
+        //toggle : 상태 변경할때 사용하는거(존재하면 지우고, 존재하지 않으면 생성함)
+        let div = $('div').addClass('green').text('toggle').addClass('bv'); //<div class='green bv'>toggle</div>
+        $('body').append(div)
+
+        $('.green').toggleClass('green');    //클래스 이름에 green이 존재하면 green을 지우라는뜻 (removeClass)
+
+        $('.bv').toggleClass('green');       //위에서 지워지고 없기 때문에 다시 green클래스가 생긴다. (addClass)
+    </script>
+</body>
+
+</html>

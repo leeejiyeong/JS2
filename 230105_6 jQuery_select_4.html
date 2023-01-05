@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery_select_4</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    
+</head>
+
+<body>
+
+    <div id="wrap">
+        <form>
+            <p id="zone1">
+                <select name="course" id="course">
+                    <option value="opt1">옵션1</option>
+                    <option value="opt2" selected>옵션2</option>
+                    <option value="opt3">옵션3</option>
+                </select>
+            </p>
+            <p id="zone2">
+                <input type="checkbox" name="hobby1" value="독서">독서
+                <input type="checkbox" name="hobby2" value="자전거" checked>자전거
+                <input type="checkbox" name="hobby3" value="등산">등산
+            </p>
+            <p id="zone3">
+                <input type="radio" name="gender" value="male"> 남성
+                <input type="radio" name="gender" value="female" checked> 여성
+            </p>
+        </form>
+    </div>
+
+    <script>
+        //prop : 태그의 상태에 대한 속성값을 가져올때 쓰는거 - checked, selected, radioBtn
+        //prop 사용 안했을때
+        let zone1 = $('#zone1 :selected').val();       //선택한거의 value를 가져옴(텍스트값x 벨류값o) (콜론쓸때 띄어쓰기 틀리면 에러남 조심)
+        console.log(zone1)
+
+        let zone2 = $('#zone2 :checked').val();
+        console.log(zone2)
+
+        let zone3 = $('#zone3 :checked').val();
+        console.log(zone3)
+
+        //prop 사용했을때
+        let result = $('#zone2 :nth-child(2)').prop('checked')          //p태그의 2번째 자식이 체크가 되어있냐 안되어있냐
+        let result2 = $('#zone2 :nth-child(3)').prop('checked',true)    //p태그의 3번째 자식이 체크되게하셈
+        console.log(result)
+        let selResult = $('#course').prop('selectedIndex')              //#course에서 selected된 애의 index값
+        console.log(selResult)
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery_make_1</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+</head>
+<style>
+    input {
+        display: block;
+    }
+</style>
+
+<body>
+    <button id="add" onclick="add()">추가</button>
+    <button id="del" onclick="del()">삭제</button>
+
+    <div id="delete" class="delete">
+    </div>
+
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+    <button class="btn1" type="button">그룹이벤트버튼</button>
+
+
+    <script>
+        //그룹이벤트
+        //걸기
+        $('.btn1').on({                 //on(키는거) -> .btn1에 전부 클릭하면 함수실행되게 설정 하겠다는거
+            "click" : function(){
+                alert('쿠키');
+            }
+        })
+        //해제하기
+        $('.btn1').off("click");        
+
+
+        //
+        let div = $('#delete');
+        let no = 0;
+
+        function add() {
+            div                 
+                .append($('<input>')                        //div에 input을 붙이고 css와 val을 추가해줌
+                    .css({
+                        'background-color': 'green',
+                        'color': 'white'
+                    })
+                    .val('추가되는중' + no)
+                )
+                .append(                                    //위에서 만든 input뒤에다가 button을 붙여주고 클릭시 함수실행
+                    $('<button>').click(function () {
+                        $(this).prev().remove();            //이벤트에서this = 클릭한 주체 = button. 버튼 앞에껄 지운다(input박스)
+                        $(this).remove();                   //버튼도 지워준다    
+                    })
+                    .text('한줄삭제')                        //버튼의 텍스트 
+                )
+            no++;
+        }
+
+        function del() {
+            div.empty();
+            //remove() : 본인자신까지 삭제하는것(자식 자동삭제)
+            //empty() : 선택요소의 자식을 삭제하는 것
+        }
+    </script>
+</body>
+
+</html>

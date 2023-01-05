@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery_select_3</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script>
+        $(function () { //스크립트 위치가 위에있기 때문에 돔을 못 불러올수 있으므로 써주는 것 이다.(페이지 다 로딩되고 실행되게)
+
+            //ul의 첫번째 li가져오기
+            $('#menu li:first').css('color', 'red')             //document.querySelector('#menu:nth-child(1)')
+            //ul의 마지막 li가져오기
+            $('#menu li:last').css('color', 'green')            //first, last는 사용할수 있지만 second, third 이런건 없음
+            //ul의 2번째 li가져오기
+            $('#menu li:nth-child(2)').css('color', 'purple')
+
+            //홀수or짝수번째 가져오기
+            /* 
+            $('#menu li:even').css('background-color','pink')   //odd, even이 반대로 나온다(?) odd쓰면 짝수가 선택됨
+            $('#menu li:odd').css('background-color','orange')  // -> 인덱스 번호가 0부터 시작이라 그런거 같다.
+            */
+            $('#menu li:nth-child(2n)').css('background-color', 'green') //2의 배수만 선택됨
+
+            //li중에서 인덱스가 0인 태그를 가져오기 == 첫번째 li
+            $('#menu li:eq(0)').css('color', 'aquamarine')
+
+            //반복문
+            // [{},{},{}]
+            var obj = [{
+                'area': '스울'
+            }, {
+                'area': '붓싼'
+            }, {
+                'area': '대구'
+            }]
+
+            $(obj).each(function(e,i){          //forEach로 돌려서 꺼내는것
+                console.log(e + ":" + i)
+            })
+
+            for(let aa of obj){
+                console.log(aa)
+            }
+
+        })
+    </script>
+
+    <h1>탐색 선택자</h1>
+    <ul id="menu">
+        <li>내용1</li>
+        <li>내용2</li>
+        <li>내용3</li>
+        <li>내용4</li>
+    </ul>
+
+</body>
+
+</html>

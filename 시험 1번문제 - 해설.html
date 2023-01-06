@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<style>
+    @font-face {
+        font-family: 'YanoljaYacheR';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/YanoljaYacheR.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        font-family: 'YanoljaYacheR';
+        font-size: xx-large;
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 5vh;
+    }
+
+    .table {
+        border: 2px solid black
+    }
+    h1{
+        border: 2px solid red;
+    }
+    tbody > tr:nth-child(odd){
+        background-color: rgb(212, 212, 212);
+    }
+</style>
+
+<body>
+
+    <h1>
+        수도권 미세먼지 / 초미세먼지 농도
+    </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col" id="col">
+                <table class="table">
+                    <thead>
+                        <th>지역</th>
+                        <th>미세먼지 농도/대기질</th>
+                        <th>초미세먼지 농도/대기질</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        fetch('http://openapi.seoul.go.kr:8088/6d4d776b466c656533356a4b4b5872/json/RealtimeCityAir/1/99')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                let infomation = data.RealtimeCityAir.row
+                let tbd = document.querySelector('tbody')
+                for (let info of infomation) {
+                    
+                    let air;
+                    let air2;
+
+                    let tr = document.createElement('tr')
+                    let locTd = document.createElement('td');
+                    let airTd1 = document.createElement('td');
+                    let airTd2 = document.createElement('td');
+                    //미세먼지 : PM10 100이하 좋음 100 초과 나쁨
+                    //초미세먼지 : PM25 35이하 좋음 30 초과 나쁨
+                    air = info.PM10 <= 100 ? '좋음' : '나쁨';
+                    air2 = info.PM25 <= 35 ? '좋음' : '나쁨'
+
+                    locTd.innerText = info.MSRSTE_NM;
+                    airTd1.innerText = `${info.PM10} / ${air}`;
+                    airTd2.innerText = `${info.PM25} / ${air2}`;
+
+                    tr.append(locTd, airTd1, airTd2);
+                    tbd.append(tr)
+                }
+            })
+    </script>
+</body>
+
+</html>

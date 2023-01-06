@@ -102,6 +102,29 @@
                         .text('뒤로가기')
 
                     )
+                    //영화사 조회 버튼 만들고 클릭이벤트 걸기
+                    //방법1)
+                    /* $('#nextInfo').append(
+                        $('<button>').attr({
+                            'type': 'submit',
+                            'class' : 'btn btn-dark'
+                        })
+                        .click(function(){
+                            location.href = `230106_1 movieCompany.html?${movieInfo.companys[0].companyCd}`
+                        })
+                        .text('영화사 조회')
+                    ) */
+
+                    //방법2)
+                    let nextBtn = $('<button>');
+                        nextBtn.attr('type','submit')
+                        nextBtn.addClass('btn btn-dark')
+                        nextBtn.click(function(){
+                            location.href = `230106_1 movieCompany.html?${movieInfo.companys[0].companyCd}`
+                        });
+                        nextBtn.text('영화사 조회');
+                    $('#nextInfo').append(nextBtn);
+
                 },
                 error: function (error) {
 
@@ -109,7 +132,7 @@
 
             })
         })
-        $('button').click('href',function(){
+        /* $('button').click('href',function(){
             $.ajax({
                 url : `http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=${movieCd}`,
                 dataType : 'json',
@@ -120,7 +143,7 @@
                     location.href = `/230105_14 movieCompany.html?${companyCd}`;
                 }
             })
-        })
+        }) */
     </script>
 </body>
 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+<style>
+    @font-face {
+        font-family: 'yg-jalnan';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        font-family: 'yg-jalnan';
+        font-size: xx-large;
+    }
+
+    #list {
+        border: 1px dotted white;
+        text-align: left;
+        font-size: 20px;
+        background-color: blueviolet;
+        color: white;
+        width: 63.5vw;
+    }
+
+    #history {
+        margin-top: 30px;
+        border: 1px dotted white;
+        text-align: left;
+        font-size: 20px;
+        background-color: gray;
+        color: white;
+        width: 63.5vw;
+    }
+
+    button {
+        background-color: black;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    p {
+        font-size: 15px;
+    }
+</style>
+
+<body>
+    <h1>To Do List</h1>
+    <input type="text" id="doList" style="width: 50vw;">
+    <button type="button" onclick="saveList()">ListUp</button>
+    <!-- 체크된 항목을 삭제 하는 버튼 -->
+    <button type="button" onclick="deleteElements()">DeleteAll</button>
+    <br>
+    <br>
+    <h2>LIST</h2>
+    <div id="list">
+
+    </div>
+
+    <h2>HISTORY</h2>
+
+    <div id="history">
+
+    </div>
+    <script>
+        function saveList() {
+            //input element 가져오기
+            let doList = $('#doList');
+
+            let p = $('<p>')
+            //<p>doList.value</p>
+            p.text(doList.val());
+
+            //input -> text, password, email, checkbox, radio
+            let ckb = $('<input>')
+            ckb.attr('type', 'checkbox');
+            p.prepend(ckb);
+
+            let btn = $('<button>')
+            btn.text("Complete");
+            //button 이벤트 부여(setAttribute)
+            btn.attr('type', 'button');
+            btn.click(function () {
+                //delete로 변경 후 이벤트 변경
+                $(this).text('delete').click(function () {
+                    $(this).parent().remove()
+                })
+                $(this).parent().find('input').prop('checked',false)
+                $('#history').append($(this).parent());
+            });
+            //<p> <checkbox> text <buttn></p>
+            p.append(btn);
+
+            $('#list').append(p)
+        }
+
+        function deleteElements(){
+            //$('선택자') => document.querySelectorAll
+            let data = $('input[type=checkbox]:checked');
+            // data.each(function(e,i){
+            //     //i를쓰게되면 JS 사용
+            //     //$(i) jQeury 사용
+            //     $(i).parent().remove()
+            // });
+            // for(let tag of data){
+            //     console.log(tag)
+            // }
+        }
+    </script>
+</body>
+
+</html>
